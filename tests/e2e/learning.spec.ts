@@ -33,10 +33,13 @@ test.describe("learning flow", () => {
     await expect(check.getByText("0 of 4 answered")).toBeVisible();
 
     // Bookmark and complete.
+    // The buttons update optimistically and stay disabled until the server confirms the change.
     await page.getByRole("button", { name: "Save for later" }).click();
     await expect(page.getByRole("button", { name: "Saved" })).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("button", { name: "Saved" })).toBeEnabled();
     await page.getByRole("button", { name: "Mark lesson as complete" }).click();
     await expect(page.getByRole("button", { name: "Completed" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Completed" })).toBeEnabled();
     await expect(page.getByText("Your best knowledge-check score is 3 of 4.")).toBeVisible();
 
     // Persisted after reload.
@@ -58,7 +61,7 @@ test.describe("learning flow", () => {
     await page.getByRole("button", { name: "Mark lesson as complete" }).click();
     await expect(page.getByRole("button", { name: "Completed" })).toBeVisible();
     await page.getByRole("button", { name: "Completed" }).click();
-    await expect(page.getByRole("button", { name: "Mark lesson as complete" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Mark lesson as complete" })).toBeEnabled();
     await page.reload();
     await expect(page.getByRole("button", { name: "Mark lesson as complete" })).toBeVisible();
   });

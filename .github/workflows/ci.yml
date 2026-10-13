@@ -23,9 +23,18 @@ jobs:
       - name: Install Playwright's Chromium
         run: npx playwright install --with-deps chromium
       - name: End-to-end tests (production build, English and Arabic)
-        run: npm run test:e2e
+        run: |
+          set -o pipefail
+          npm run test:e2e 2>&1 | tee e2e-output.log
         env:
           CI: "true"
+      - name: Show the end of the end-to-end output as an annotation
+        if: failure()
+        run: |
+          if [ -f e2e-output.log ]; then
+            msg=$(tail -n 120 e2e-output.log | sed 's/\x1b\[[0-9;]*m//g; s/%/%25/g; s/\r//g' | awk 'BEGIN{ORS="%0A"} {print}')
+            echo "::error title=End-to-end output (last 120 lines)::${msg}"
+          fi
       - name: Upload the Playwright report
         if: failure()
         uses: actions/upload-artifact@v6

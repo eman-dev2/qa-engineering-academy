@@ -23,6 +23,7 @@ export function BookmarkButton({ lessonKey, initial, locale, labels }: { lessonK
       <button
         type="button"
         aria-pressed={saved}
+        aria-busy={pending}
         disabled={pending}
         onClick={() =>
           start(async () => {
@@ -60,6 +61,7 @@ export function CompleteToggle({
       <button
         type="button"
         aria-pressed={done}
+        aria-busy={pending}
         disabled={pending}
         onClick={() =>
           start(async () => {

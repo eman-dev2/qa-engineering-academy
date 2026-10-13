@@ -7,6 +7,10 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
+  // The production server renders dynamic pages on demand; under parallel load (several logins with
+  // scrypt at once) a first render can take a few seconds, so allow 10 s per assertion.
+  expect: { timeout: 10_000 },
+  workers: process.env.CI ? 2 : undefined,
   reporter: [["list"], ["html", { open: "never", outputFolder: "playwright-report" }]],
   use: {
     baseURL: `http://localhost:${PORT}`,
