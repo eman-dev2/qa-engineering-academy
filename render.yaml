@@ -24,8 +24,8 @@ services:
         value: "1"
       - key: DATABASE_PATH
         value: /var/data/academy.db
-      - key: NEXT_PUBLIC_SITE_URL
-        sync: false # e.g. https://qa-engineering-academy.onrender.com
+      # NEXT_PUBLIC_SITE_URL is optional here: Render's own RENDER_EXTERNAL_URL is used for links
+      # and the sitemap. Add it only when you attach a custom domain.
       - key: ADMIN_EMAIL
         sync: false # first administrator, created at start-up only if no admin exists
       - key: ADMIN_PASSWORD

@@ -35,9 +35,14 @@ function localeOf(form: FormData): Locale {
   return isLocale(v) ? v : "en";
 }
 
-/** Absolute origin for links in emails: NEXT_PUBLIC_SITE_URL when set, otherwise the request's host. */
+/**
+ * Absolute origin for links in emails. A configured address (NEXT_PUBLIC_SITE_URL, or Render's
+ * RENDER_EXTERNAL_URL) is always preferred, so a forged Host header can't redirect reset links.
+ * The request's host is only a fallback for local development.
+ */
 async function siteOrigin(): Promise<string> {
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  const configured = process.env.NEXT_PUBLIC_SITE_URL || process.env.RENDER_EXTERNAL_URL;
+  if (configured) return configured.replace(/\/$/, "");
   const h = await headers();
   const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
   const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") || host.startsWith("127.") ? "http" : "https");
