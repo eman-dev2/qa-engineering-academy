@@ -1,0 +1,38 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# New > Blueprint > pick this repository. Render asks for the values marked `sync: false`.
+#
+# The persistent disk keeps accounts, progress and admin edits across restarts and deploys.
+# Disks need a paid instance (Starter). For a free, temporary demo, see docs/DEPLOYMENT.md:
+# remove the `disk` block and set `plan: free` (all data is lost whenever the instance restarts).
+services:
+  - type: web
+    name: qa-engineering-academy
+    runtime: node
+    plan: starter
+    region: frankfurt
+    # The disk isn't mounted while building, so the build uses its own throwaway database.
+    buildCommand: npm ci --include=dev && DATABASE_PATH=./data/build.db npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: DATABASE_PATH
+        value: /var/data/academy.db
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false # e.g. https://qa-engineering-academy.onrender.com
+      - key: ADMIN_EMAIL
+        sync: false # first administrator, created at start-up only if no admin exists
+      - key: ADMIN_PASSWORD
+        sync: false # 10+ characters with a letter and a number; never shown in the app
+      - key: ADMIN_NAME
+        value: Eman Abo-Oun
+    disk:
+      name: academy-data
+      mountPath: /var/data
+      sizeGB: 1

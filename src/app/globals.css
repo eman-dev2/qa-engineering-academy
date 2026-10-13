@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/*
+  QA Engineering Academy design tokens.
+  Identity: reviewer's ink on cool paper, a highlighter for what matters,
+  interval brackets for boundaries. Pass/fail colours are reserved for real status.
+*/
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --paper: #f4f5f8;
+  --surface: #ffffff;
+  --surface-2: #eceef3;
+  --ink: #161a2c;
+  --ink-2: #4a5068;
+  --ink-3: #6b7189;
+  --line: #d9dce5;
+  --line-strong: #b9bdcc;
+  --pen: #1f3fae;
+  --pen-hover: #162f87;
+  --pen-soft: #e6eaf9;
+  --on-pen: #ffffff;
+  --highlighter: #f6d64a;
+  --highlighter-ink: #2b2300;
+  --pass: #17734a;
+  --pass-soft: #e3f3ea;
+  --fail: #b23a26;
+  --fail-soft: #fbe8e4;
+  --warn: #8a5a00;
+  --warn-soft: #fbf0d9;
+  --code-bg: #f7f8fa;
+  --focus: #1f3fae;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --paper: #11131b;
+  --surface: #181b26;
+  --surface-2: #212534;
+  --ink: #e8eaf1;
+  --ink-2: #a9aec1;
+  --ink-3: #8a90a6;
+  --line: #2c3143;
+  --line-strong: #444a60;
+  --pen: #94a8ff;
+  --pen-hover: #b5c3ff;
+  --pen-soft: #23294a;
+  --on-pen: #11131b;
+  --highlighter: #e6c93c;
+  --highlighter-ink: #1e1900;
+  --pass: #5fd09a;
+  --pass-soft: #163327;
+  --fail: #ff8f7a;
+  --fail-soft: #3a1d18;
+  --warn: #f0c25c;
+  --warn-soft: #362a10;
+  --code-bg: #141722;
+  --focus: #b5c3ff;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-pen: var(--pen);
+  --color-pen-hover: var(--pen-hover);
+  --color-pen-soft: var(--pen-soft);
+  --color-on-pen: var(--on-pen);
+  --color-highlighter: var(--highlighter);
+  --color-highlighter-ink: var(--highlighter-ink);
+  --color-pass: var(--pass);
+  --color-pass-soft: var(--pass-soft);
+  --color-fail: var(--fail);
+  --color-fail-soft: var(--fail-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-code-bg: var(--code-bg);
+
+  --font-sans: "Schibsted Grotesk Variable", "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Literata Variable", "Noto Naskh Arabic Variable", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Type scale: 1.2 minor third, 17px base */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.375rem;
+  --text-4xl: 3rem;
+  --text-5xl: 3.75rem;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+}
+
+html {
+  background: var(--paper);
+}
+
+/* Testers read operators literally: never render <= as a ligature. */
+code,
+kbd,
+pre,
+samp,
+.font-mono {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--highlighter);
+  color: var(--highlighter-ink);
+}
+
+/* Highlighter mark: used for the one thing on a page that matters most. */
+.mark {
+  background: linear-gradient(
+    to bottom,
+    transparent 0 12%,
+    var(--highlighter) 12% 88%,
+    transparent 88%
+  );
+  color: var(--highlighter-ink);
+  padding: 0 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -4rem;
+  z-index: 50;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--pen);
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ---------- Lesson prose ---------- */
+.prose-lesson {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--ink);
+  max-width: 68ch;
+}
+.prose-lesson > * + * {
+  margin-top: 1.1em;
+}
+.prose-lesson h2 {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-top: 2.2em;
+  scroll-margin-top: 6rem;
+}
+.prose-lesson h3 {
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  font-weight: 650;
+  margin-top: 1.8em;
+  scroll-margin-top: 6rem;
+}
+.prose-lesson h2 + *,
+.prose-lesson h3 + * {
+  margin-top: 0.6em;
+}
+.prose-lesson a {
+  color: var(--pen);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+.prose-lesson a:hover {
+  color: var(--pen-hover);
+  text-decoration-thickness: 2px;
+}
+.prose-lesson ul,
+.prose-lesson ol {
+  padding-inline-start: 1.4em;
+}
+.prose-lesson ul {
+  list-style: disc;
+}
+.prose-lesson ol {
+  list-style: decimal;
+}
+.prose-lesson li + li {
+  margin-top: 0.35em;
+}
+.prose-lesson li::marker {
+  color: var(--ink-3);
+}
+.prose-lesson strong {
+  font-weight: 650;
+}
+.prose-lesson :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.08em 0.32em;
+}
+.prose-lesson pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background: var(--code-bg) !important;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.prose-lesson pre code {
+  font-family: inherit;
+}
+[data-theme="dark"] .prose-lesson pre span {
+  color: var(--shiki-dark) !important;
+}
+.prose-lesson blockquote {
+  border-inline-start: 3px solid var(--highlighter);
+  padding-block: 0.25em;
+  padding-inline-start: 1em;
+  color: var(--ink-2);
+  font-style: normal;
+}
+.prose-lesson blockquote > * + * {
+  margin-top: 0.6em;
+}
+.prose-lesson table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  display: block;
+  overflow-x: auto;
+}
+.prose-lesson th,
+.prose-lesson td {
+  border-bottom: 1px solid var(--line);
+  padding-block: 0.55em;
+  padding-inline: 0 0.75em;
+  text-align: start;
+  vertical-align: top;
+}
+.prose-lesson th {
+  font-weight: 650;
+  border-bottom: 2px solid var(--line-strong);
+  white-space: nowrap;
+}
+.prose-lesson hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.5em 0;
+}
+
+/* ---------- Right-to-left (Arabic) ---------- */
+[dir="rtl"] * {
+  letter-spacing: 0 !important;
+}
+[dir="rtl"] body {
+  line-height: 1.7;
+}
+[dir="rtl"] .prose-lesson {
+  line-height: 1.95;
+  font-size: 1.1rem;
+}
+[dir="rtl"] .prose-lesson h2,
+[dir="rtl"] .prose-lesson h3 {
+  line-height: 1.45;
+}
+/* Code, identifiers and URLs always read left to right, even inside Arabic text. */
+pre,
+code,
+kbd,
+samp,
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+pre {
+  text-align: left;
+}
+/* Icons that point "forward" flip in RTL. */
+[dir="rtl"] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

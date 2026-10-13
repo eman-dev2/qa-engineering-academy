@@ -1,0 +1,3 @@
+﻿ID,Requirement,Title,Preconditions,Test data,Steps,Expected result,Priority,Technique,Status
+TC-001,AC-1,Verify free shipping applies at exactly 50.00,Logged-in customer; basket empty,Basket total 50.00 JOD,1. Add items totalling 50.00 2. Open checkout,Delivery fee shows 0.00,High,Boundary value analysis,Not run
+TC-002,AC-1,Verify delivery fee is charged just below the threshold,Logged-in customer; basket empty,Basket total 49.99 JOD,1. Add items totalling 49.99 2. Open checkout,Delivery fee shows 2.50,High,Boundary value analysis,Not run

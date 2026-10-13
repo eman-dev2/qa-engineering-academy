@@ -1,0 +1,3 @@
+﻿Risk ID,Risk description,Type (product/project),Likelihood (1-3),Impact (1-3),Score,Owner,Mitigation / test response,Status
+R-01,Refund total can exceed the original payment under concurrent requests,Product,2,3,6,QA lead,Concurrency tests on refund API; idempotency checks,Open
+R-02,Staging environment unavailable in release week,Project,2,2,4,Delivery manager,Book environment; fallback to ephemeral env,Open

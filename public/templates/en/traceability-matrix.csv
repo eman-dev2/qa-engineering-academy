@@ -1,0 +1,3 @@
+﻿Requirement ID,Requirement,Risk,Test cases,Automated tests,Latest result,Open defects,Notes
+AC-1,Orders of 50.00 JOD or more ship free,High,TC-001; TC-002,checkout.spec.ts,Passed,,
+AC-2,Vouchers cannot be combined,Medium,TC-010,,Not run,,
