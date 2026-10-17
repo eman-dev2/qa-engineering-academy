@@ -67,9 +67,11 @@ test.describe("learning flow", () => {
   });
 
   test("dashboard suggests continuing the lesson most recently opened", async ({ page }) => {
-    await signUp(page, { next: "/paths/api-testing-essentials/authentication-vs-authorization" });
-    // The visit is recorded from the browser after load.
-    await page.waitForLoadState("networkidle");
+    const lesson = "/paths/api-testing-essentials/authentication-vs-authorization";
+    // The visit is recorded by a server action the lesson page calls after it loads; wait for its response.
+    const visitRecorded = page.waitForResponse((r) => r.request().method() === "POST" && new URL(r.url()).pathname === lesson);
+    await signUp(page, { next: lesson });
+    await visitRecorded;
     await page.goto("/dashboard");
     const cont = page.locator("#continue").locator("..");
     await expect(cont).toContainText("Continue where you left off");

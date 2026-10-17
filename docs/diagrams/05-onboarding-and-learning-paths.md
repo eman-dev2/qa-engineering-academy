@@ -12,7 +12,7 @@ flowchart TD
   Land --> Lang
   Lang -->|English| Catalog["/paths catalog"]:::done
   Lang -->|العربية| CatalogAr["/ar/paths catalog"]:::done
-  Catalog --> Filter["Filter by starting level<br/>Beginner … Test manager"]:::done
+  Catalog --> Filter["Filter by starting level<br/>Beginner … QA lead"]:::done
   CatalogAr --> Filter
   Quiz["Placement quiz recommends a path"]:::planned
   Land -.-> Quiz -.-> Filter
@@ -31,7 +31,7 @@ flowchart TD
 | --- | --- | --- | --- |
 | QA Foundations | Beginner → Junior | 5 | 0 |
 | Practical Manual Testing | Junior → Mid-level | 1 | 5 |
-| Playwright with TypeScript | Junior → Automation engineer | 1 | 4 |
+| Web Automation with Playwright and TypeScript | Junior → Automation engineer | 1 | 4 |
 | API Testing Essentials | Mid-level → Senior | 4 | 2 |
 | Senior Quality Engineering | Senior → Head of QE | 1 | 3 |
 | QA Leadership | Senior → QA lead | 1 | 3 |

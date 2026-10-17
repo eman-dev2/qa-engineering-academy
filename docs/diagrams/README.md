@@ -1,6 +1,6 @@
 # Diagrams
 
-Fourteen Mermaid diagrams. GitHub renders them inline; PNG copies are in [`rendered/`](rendered/) for offline reading. Every diagram uses the same legend: **solid green = implemented**, **dashed grey = planned (not implemented)**, blue = configured in the repository but only runs once connected to GitHub or Render.
+Fourteen Mermaid diagrams. GitHub renders them inline; PNG copies are in [`rendered/`](rendered/) for offline reading. Every diagram uses the same legend: **solid green = implemented**, **dashed grey = planned (not implemented)**, blue = configured in the repository and ready to connect (Render).
 
 | # | Diagram | Status |
 | --- | --- | --- |
@@ -16,7 +16,7 @@ Fourteen Mermaid diagrams. GitHub renders them inline; PNG copies are in [`rende
 | 10 | [YouTube video curation](10-youtube-video-curation.md) | Implemented; automated discovery and re-checks planned |
 | 11 | [User video uploads](11-user-video-uploads.md) | **Planned only** |
 | 12 | [Entity-relationship diagram](12-entity-relationships.md) | Implemented; future tables listed |
-| 13 | [Testing, CI/CD and deployment](13-testing-ci-cd-deployment.md) | Tests implemented and passing; CI and Render configured |
+| 13 | [Testing, CI/CD and deployment](13-testing-ci-cd-deployment.md) | Tests and GitHub Actions CI implemented and passing; Render configured |
 | 14 | [Error handling](14-error-handling.md) | Implemented; error tracking service planned |
 
 All diagrams were rendered with `@mermaid-js/mermaid-cli` 11 to check that they parse.

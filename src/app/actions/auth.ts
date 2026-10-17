@@ -86,7 +86,7 @@ export async function login(_prev: FormState, form: FormData): Promise<FormState
   if (isThrottled(email)) return { message: t.auth.throttled, values };
 
   const user = getDb()
-    .select({ id: schema.users.id, passwordHash: schema.users.passwordHash })
+    .select({ id: schema.users.id, passwordHash: schema.users.passwordHash, preferredLocale: schema.users.preferredLocale })
     .from(schema.users)
     .where(eq(schema.users.email, email))
     .get();
@@ -100,7 +100,10 @@ export async function login(_prev: FormState, form: FormData): Promise<FormState
   }
   clearFailures(email);
   await createSession(user.id);
-  redirect(safeNext(form.get("next"), localePath(locale, "/dashboard")));
+  // Without a specific destination, open the dashboard in the account's preferred language.
+  const defaultNext = localePath(locale, "/dashboard");
+  const requested = safeNext(form.get("next"), defaultNext);
+  redirect(requested === defaultNext && user.preferredLocale ? localePath(user.preferredLocale, "/dashboard") : requested);
 }
 
 export async function logout(form: FormData) {

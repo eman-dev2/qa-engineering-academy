@@ -369,6 +369,7 @@ const ar: Dictionary = {
     profile: "الملف الشخصي",
     profileSaved: "حُفظ الملف الشخصي.",
     preferredLanguage: "اللغة المفضّلة",
+    preferredLanguageHint: "عند تسجيل الدخول تُفتح صفحة «لوحتي» بهذه اللغة.",
     langEn: "English (الإنجليزية)",
     langAr: "العربية",
     currentPasswordForEmail: "كلمة المرور الحالية (مطلوبة فقط لتغيير البريد الإلكتروني)",

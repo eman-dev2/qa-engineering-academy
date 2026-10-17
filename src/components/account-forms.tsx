@@ -25,9 +25,13 @@ export function ProfileForm({ locale, t, user }: { locale: Locale; t: Text; user
         <label htmlFor={langId} className="block font-medium">
           {t.account.preferredLanguage}
         </label>
+        <p id={`${langId}-hint`} className="mt-1 text-sm text-ink-3">
+          {t.account.preferredLanguageHint}
+        </p>
         <select
           id={langId}
           name="preferredLocale"
+          aria-describedby={`${langId}-hint`}
           defaultValue={current}
           key={current}
           className="mt-1.5 h-11 w-full rounded-md border border-line-strong bg-surface px-3 text-ink"

@@ -343,6 +343,7 @@ const en = {
     profile: "Profile",
     profileSaved: "Profile saved.",
     preferredLanguage: "Preferred language",
+    preferredLanguageHint: "When you log in, your dashboard opens in this language.",
     langEn: "English",
     langAr: "العربية (Arabic)",
     currentPasswordForEmail: "Current password (only needed to change your email)",

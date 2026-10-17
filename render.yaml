@@ -1,17 +1,25 @@
 # Render Blueprint: https://render.com/docs/blueprint-spec
-# New > Blueprint > pick this repository. Render asks for the values marked `sync: false`.
+# Dashboard → New → Blueprint → pick this repository. Render asks for the values marked `sync: false`.
 #
-# The persistent disk keeps accounts, progress and admin edits across restarts and deploys.
-# Disks need a paid instance (Starter). For a free, temporary demo, see docs/DEPLOYMENT.md:
-# remove the `disk` block and set `plan: free` (all data is lost whenever the instance restarts).
+# This file starts on Render's FREE plan, as a demo:
+#   - the service sleeps after ~15 minutes without visits and takes about a minute to wake up;
+#   - there is no persistent disk, so every restart, wake-up or deploy starts from a fresh database.
+#     Content is reseeded and the administrator is recreated from ADMIN_EMAIL / ADMIN_PASSWORD,
+#     but new accounts, progress and admin edits are lost.
+#
+# To keep data permanently (paid Starter instance with a disk), see docs/DEPLOYMENT.md, "Option B":
+#   plan: starter
+#   buildCommand: npm ci --include=dev && DATABASE_PATH=./data/build.db npm run build
+#   DATABASE_PATH: /var/data/academy.db
+#   disk: { name: academy-data, mountPath: /var/data, sizeGB: 1 }
 services:
   - type: web
     name: qa-engineering-academy
     runtime: node
-    plan: starter
+    plan: free
     region: frankfurt
-    # The disk isn't mounted while building, so the build uses its own throwaway database.
-    buildCommand: npm ci --include=dev && DATABASE_PATH=./data/build.db npm run build
+    # Dev dependencies are needed: the start-up script runs with tsx.
+    buildCommand: npm ci --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /
     autoDeploy: true
@@ -22,17 +30,12 @@ services:
         value: production
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
-      - key: DATABASE_PATH
-        value: /var/data/academy.db
-      # NEXT_PUBLIC_SITE_URL is optional here: Render's own RENDER_EXTERNAL_URL is used for links
-      # and the sitemap. Add it only when you attach a custom domain.
+      # The database file (./data/academy.db) is created during the build and used by the server.
+      # NEXT_PUBLIC_SITE_URL is optional: Render's own RENDER_EXTERNAL_URL is used for links and the
+      # sitemap. Add it only when you attach a custom domain.
       - key: ADMIN_EMAIL
-        sync: false # first administrator, created at start-up only if no admin exists
+        sync: false # first administrator, created only if no administrator exists
       - key: ADMIN_PASSWORD
         sync: false # 10+ characters with a letter and a number; never shown in the app
       - key: ADMIN_NAME
         value: Eman Abo-Oun
-    disk:
-      name: academy-data
-      mountPath: /var/data
-      sizeGB: 1

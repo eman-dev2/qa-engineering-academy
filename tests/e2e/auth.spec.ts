@@ -215,9 +215,14 @@ test.describe("account settings", () => {
     await other.goto("/dashboard");
     await expect(other).toHaveURL(/\/login/);
 
+    // Logging in without a specific destination opens the dashboard in the preferred language (Arabic).
     await page.context().clearCookies();
-    await logIn(page, newEmail, "changed-password-9");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Renamed Learner");
+    await page.goto("/login");
+    await page.getByLabel("Email", { exact: true }).fill(newEmail);
+    await page.getByLabel("Password", { exact: true }).fill("changed-password-9");
+    await page.getByRole("button", { name: "Log in" }).click();
+    await expect(page).toHaveURL("/ar/dashboard");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("سجلّ تعلّم Renamed Learner");
     await other.close();
   });
 
